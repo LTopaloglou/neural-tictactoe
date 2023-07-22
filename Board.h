@@ -24,7 +24,7 @@ class Board {
 public:
     Board();
     Board(const Board& other);
-    Board(Board&& other);
+    Board(Board&& other) noexcept;
     vector<int> possibleMoves();
     bool playMove(int spot, char player);
     winner evaluate();
