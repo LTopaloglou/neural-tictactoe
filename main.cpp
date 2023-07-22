@@ -5,18 +5,20 @@ using namespace std;
 
 int main() {
     Board board;
-    board.print(cout);
-    cout << "Winner: " << board.evaluate() << endl;
     board.playMove(0, 'O');
     board.playMove(1, 'X');
     board.playMove(2, 'O');
-    board.playMove(3, 'O');
-    board.playMove(4, 'X');
-    board.playMove(5, 'X');
-    board.playMove(6, 'X');
-    board.playMove(7, 'O');
-    board.playMove(8, 'O');
-
     board.print(cout);
     cout << "Winner: " << board.evaluate() << endl;
+    cout << endl;
+
+    cout << "Board from move ctor" << endl;
+    Board board2 = board.playerMove(3);
+    board2.print(cout);
+    board2.playMove(4, 'O');
+    board2.print(cout);
+    cout << endl;
+
+    cout << "initial board" << endl;
+    board.print(cout);
 }
