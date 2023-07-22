@@ -15,9 +15,11 @@ int main() {
             cin >> move;
         } while (!board.playMove(move, 'X'));
         board.print(cout);
-        cout << "AI Move: " << endl;
-        MinMaxNode aiMove(board, true);
-        board = aiMove.getBestMove();
+        if(board.evaluate() == winner::incomplete) {
+            cout << "AI Move: " << endl;
+            MinMaxNode aiMove(board, true);
+            board = aiMove.getBestMove();
+        }
     }
     board.print(cout);
 }

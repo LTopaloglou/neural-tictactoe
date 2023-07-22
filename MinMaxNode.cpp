@@ -7,7 +7,10 @@ void MinMaxNode::calculateCost() {
         cost = -1;
         for (int i : moves) {
             MinMaxNode* move = new MinMaxNode(board.aiMove(i), !aiTurn);
-            if(move->getCost() > cost) {
+            if (bestMove == nullptr) {
+                cost = move->getCost();
+                bestMove = move;
+            }if(move->getCost() > cost) {
                 cost = move->getCost();
                 delete bestMove;
                 bestMove = move;
@@ -17,7 +20,10 @@ void MinMaxNode::calculateCost() {
         cost = 1;
         for (int i : moves) {
             MinMaxNode* move = new MinMaxNode(board.playerMove(i), !aiTurn);
-            if (move->getCost() < cost) {
+            if (bestMove == nullptr) {
+                cost = move->getCost();
+                bestMove = move;
+            } else if (move->getCost() < cost) {
                 cost = move->getCost();
                 delete bestMove;
                 bestMove = move;

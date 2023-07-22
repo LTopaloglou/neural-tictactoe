@@ -79,14 +79,12 @@ void Board::print(ostream &out) {
 //This method aiMove should only be used by compute, and spot should be chosen from
 //the list of possibleMoves(), but there is some error throwing here for redeundancy
 Board Board::playerMove(int spot) {
-    cout << "player move at " << spot << endl;
     Board copy(*this);
     if (!copy.playMove(spot, PLAYER_TILE)) throw "Invalid Move";
     return copy;
 }
 
 Board Board::aiMove(int spot) {
-    cout << "ai move at " << spot << endl;
     Board copy(*this);
     if (!copy.playMove(spot, AI_TILE)) throw "Invalid Move";
     return copy;
