@@ -2,6 +2,15 @@
 
 Board::Board(): tiles{vector<char>(NUM_TILES, EMPTY_TILE)} {}
 
+Board::Board(const Board& other): tiles{other.tiles} {}
+
+Board::Board(Board&& other) noexcept: tiles{other.tiles} {}
+
+Board &Board::operator=(const Board& other) {
+    this->tiles = other.tiles;
+    return *this;
+}
+
 vector<int> Board::possibleMoves() {
     vector<int> moves;
     for (int i = 0; i < NUM_TILES; ++i) {
@@ -43,16 +52,16 @@ winner Board::evaluate() {
     for (int i = 0; i < 3; ++i) {
         if (checkRow(i)) {
             if (tiles[3*i] == PLAYER_TILE) return winner::player;
-            if (tiles[3*i] == AI_TILE) return winner::player;
+            if (tiles[3*i] == AI_TILE) return winner::ai;
         }
         if (checkColumn(i)) {
             if (tiles[i] == PLAYER_TILE) return winner::player;
-            if (tiles[i] == AI_TILE) return winner::player;
+            if (tiles[i] == AI_TILE) return winner::ai;
         }
     }
     if (checkDiagonals()) {
         if (tiles[4] == PLAYER_TILE) return winner::player;
-        if (tiles[4] == AI_TILE) return winner::player;
+        if (tiles[4] == AI_TILE) return winner::ai;
     }
     return (checkTie()) ? winner::tie : winner::incomplete;
 }
@@ -65,4 +74,18 @@ void Board::print(ostream &out) {
     out << "|_|_|_|" << endl;
     out << "|" << tiles[6] << "|" << tiles[7] << "|" << tiles[8] << "|" << endl;
     out << "|_|_|_|" << endl;
+}
+
+//This method aiMove should only be used by compute, and spot should be chosen from
+//the list of possibleMoves(), but there is some error throwing here for redeundancy
+Board Board::playerMove(int spot) {
+    Board copy(*this);
+    if (!copy.playMove(spot, PLAYER_TILE)) throw "Invalid Move";
+    return copy;
+}
+
+Board Board::aiMove(int spot) {
+    Board copy(*this);
+    if (!copy.playMove(spot, AI_TILE)) throw "Invalid Move";
+    return copy;
 }

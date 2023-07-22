@@ -23,10 +23,15 @@ class Board {
 
 public:
     Board();
+    Board(const Board& other);
+    Board(Board&& other) noexcept;
+    Board& operator=(const Board& other);
     vector<int> possibleMoves();
     bool playMove(int spot, char player);
     winner evaluate();
     void print(ostream &out);
+    Board playerMove(int spot);
+    Board aiMove(int spot);
 };
 
 
