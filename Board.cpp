@@ -4,7 +4,12 @@ Board::Board(): tiles{vector<char>(NUM_TILES, EMPTY_TILE)} {}
 
 Board::Board(const Board& other): tiles{other.tiles} {}
 
-Board::Board(Board&& other): tiles{other.tiles} {}
+Board::Board(Board&& other) noexcept: tiles{other.tiles} {}
+
+Board &Board::operator=(const Board& other) {
+    this->tiles = other.tiles;
+    return *this;
+}
 
 vector<int> Board::possibleMoves() {
     vector<int> moves;
@@ -74,12 +79,14 @@ void Board::print(ostream &out) {
 //This method aiMove should only be used by compute, and spot should be chosen from
 //the list of possibleMoves(), but there is some error throwing here for redeundancy
 Board Board::playerMove(int spot) {
+    cout << "player move at " << spot << endl;
     Board copy(*this);
     if (!copy.playMove(spot, PLAYER_TILE)) throw "Invalid Move";
     return copy;
 }
 
 Board Board::aiMove(int spot) {
+    cout << "ai move at " << spot << endl;
     Board copy(*this);
     if (!copy.playMove(spot, AI_TILE)) throw "Invalid Move";
     return copy;

@@ -14,18 +14,17 @@ class MinMaxNode {
     //0 represents an even move.
     //-1 represents a losing move.
     int cost;
-    //Nodes for each possible next move
-    vector<MinMaxNode*> nextMoves;
+
     //Node for the best possible next move. Note that it is contained in nextmoves as well
     MinMaxNode* bestMove;
-    //TODO: Is there any value in keeping nextMoves if we have bestMove?
 
     //Generates nextMoves, sets cost and bestMove
     void calculateCost();
 public:
     MinMaxNode(Board board, bool aiTurn);
     ~MinMaxNode();
-    int getCost();
+    int getCost() const;
+    Board getBestMove() const;
 };
 
 
