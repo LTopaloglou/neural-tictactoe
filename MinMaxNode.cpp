@@ -1,34 +1,14 @@
 #include "MinMaxNode.h"
 
 void MinMaxNode::calculateCost() {
-    //TODO: CLEAN THIS UP
-    vector<int> moves = board.possibleMoves();
-    if (aiTurn) {
-        cost = -1;
-        for (int i : moves) {
-            MinMaxNode* move = new MinMaxNode(board.aiMove(i), !aiTurn);
-            if (bestMove == nullptr) {
-                cost = move->getCost();
-                bestMove = move;
-            }if(move->getCost() > cost) {
-                cost = move->getCost();
-                delete bestMove;
-                bestMove = move;
-            }
-        }
-    } else {
-        cost = 1;
-        for (int i : moves) {
-            MinMaxNode* move = new MinMaxNode(board.playerMove(i), !aiTurn);
-            if (bestMove == nullptr) {
-                cost = move->getCost();
-                bestMove = move;
-            } else if (move->getCost() < cost) {
-                cost = move->getCost();
-                delete bestMove;
-                bestMove = move;
-            }
-        }
+    for (int i : board.possibleMoves()) {
+        MinMaxNode* move = (aiTurn) ? new MinMaxNode(board.aiMove(i), !aiTurn)
+                : new MinMaxNode(board.playerMove(i), !aiTurn);
+        if (bestMove == nullptr || (aiTurn && move->getCost() > cost) || (!aiTurn && move->getCost() < cost)) {
+            delete bestMove;
+            cost = move->getCost();
+            bestMove = move;
+        } else delete move;
     }
 }
 

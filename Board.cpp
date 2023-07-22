@@ -52,16 +52,16 @@ winner Board::evaluate() {
     for (int i = 0; i < 3; ++i) {
         if (checkRow(i)) {
             if (tiles[3*i] == PLAYER_TILE) return winner::player;
-            if (tiles[3*i] == AI_TILE) return winner::player;
+            if (tiles[3*i] == AI_TILE) return winner::ai;
         }
         if (checkColumn(i)) {
             if (tiles[i] == PLAYER_TILE) return winner::player;
-            if (tiles[i] == AI_TILE) return winner::player;
+            if (tiles[i] == AI_TILE) return winner::ai;
         }
     }
     if (checkDiagonals()) {
         if (tiles[4] == PLAYER_TILE) return winner::player;
-        if (tiles[4] == AI_TILE) return winner::player;
+        if (tiles[4] == AI_TILE) return winner::ai;
     }
     return (checkTie()) ? winner::tie : winner::incomplete;
 }
