@@ -11,7 +11,7 @@ class NeuralNet {
 public:
     explicit NeuralNet(int inputs);
     void addLayer(int nodes);
-    std::vector<float> fwdProp(std::vector<float> &inputValues);
+    Vector& fwdProp(std::vector<float> &inputValues);
     void backProp();
 };
 

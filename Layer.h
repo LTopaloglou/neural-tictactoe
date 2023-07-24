@@ -5,22 +5,27 @@
 
 //TODO: Should be able to read weights/biases from file, or generate random values
 
+class SubsequentLayer;
+
 class InputLayer {
 protected:
     int nodeCount;
     Vector values;
 public:
+    friend SubsequentLayer;
     explicit InputLayer(int nodeCount);
     void setValues(std::vector<float> &newVals);
     int getNodeCount() const;
 };
 
 class SubsequentLayer : public InputLayer {
-    int prevNodeCount;
+    InputLayer* prevLayer;
     Matrix weights;
     Vector biases;
 public:
-    SubsequentLayer(int nodeCount, const InputLayer& prevLayer);
+    explicit SubsequentLayer(int nodeCount, InputLayer* prev);
+    void setValues();
+    Vector& getVector();
 };
 
 

@@ -23,8 +23,12 @@ public:
     friend Matrix;
     explicit Vector(int size);
     explicit Vector(std::vector<float> &init);
+    Vector(const Vector& other);
+    Vector& operator=(Vector&& other) noexcept ;
     void print() const;
     void setValues(std::vector<float> &newVals);
+    Vector operator+(const Vector& other) const;
+    void recLinActivation();
 };
 
 #endif //TICTACTOE_LINALG_H

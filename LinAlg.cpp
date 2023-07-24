@@ -7,7 +7,7 @@ using namespace std;
 vector<float> randVec(int elements) {
     //TODO: Should random values be between 0,1 or -1,1?
     vector<float> vec;
-    for (int i = 0; i < elements; ++i) vec.emplace_back(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
+    for (int i = 0; i < elements; ++i) vec.emplace_back(2 * (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) - 1);
     return vec;
 }
 
@@ -45,6 +45,16 @@ Vector::Vector(int size): size{size}, values{randVec(size)} {}
 ////Kind of a move constructor - vector used to initialize becomes smut
 Vector::Vector(std::vector<float> &init): size(init.size()), values{move(init)} {}
 
+//Copy Ctor
+Vector::Vector(const Vector &other): size{other.size}, values{other.values} {}
+
+//Move assignment
+Vector& Vector::operator=(Vector &&other)  noexcept {
+    swap(size, other.size);
+    swap(values, other.values);
+    return *this;
+}
+
 void Vector::print() const {
     cout << "--" << size << " ELEMENT VECTOR--" << endl;
     for (auto el : values) cout << el << " ";
@@ -52,6 +62,17 @@ void Vector::print() const {
 }
 
 void Vector::setValues(std::vector<float> &newVals) {
-    if (newVals.size() != size) throw length_error("Cannot change vec length after initialization.");
+    if (newVals.size() != size) throw length_error("Number of elements in vector do not match");
     swap(values, newVals);
+}
+
+Vector Vector::operator+(const Vector &other) const {
+    if (size != other.size) throw length_error("Cannot add two vectors of different lengths");
+    vector<float> resultant;
+    for (int i = 0; i < size; ++i) resultant.push_back(values.at(i) + other.values.at(i));
+    return Vector(resultant);
+}
+
+void Vector::recLinActivation() {
+    for (float &el : values) el = (el < 0) ? 0 : el;
 }
