@@ -5,13 +5,13 @@
 
 class NeuralNet {
     int layerCount;
-    int inputs;
+    int inputCount;
     InputLayer input;
     std::vector<SubsequentLayer> layers;
 public:
-    NeuralNet(int inputs);
-    void addLayer();
-    std::vector<float> fwdProp();
+    explicit NeuralNet(int inputs);
+    void addLayer(int nodes);
+    std::vector<float> fwdProp(std::vector<float> &inputValues);
     void backProp();
 };
 

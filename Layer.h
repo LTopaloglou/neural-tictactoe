@@ -11,10 +11,10 @@ protected:
     Vector values;
 public:
     explicit InputLayer(int nodeCount);
+    void setValues(std::vector<float> &newVals);
     int getNodeCount() const;
 };
 
-//TODO: BETTER NAME
 class SubsequentLayer : public InputLayer {
     int prevNodeCount;
     Matrix weights;

@@ -11,7 +11,7 @@ class Matrix{
     std::vector<std::vector<float>> values;
 public:
     Matrix(int numRows, int numCols);
-    explicit Matrix(std::vector<std::vector<float>> init);
+    explicit Matrix(std::vector<std::vector<float>> &init);
     void print() const;
     Vector operator*(const Vector& vec) const;
 };
@@ -21,9 +21,10 @@ class Vector{
     std::vector<float> values;
 public:
     friend Matrix;
-    Vector(int size);
-    explicit Vector(std::vector<float> init);
+    explicit Vector(int size);
+    explicit Vector(std::vector<float> &init);
     void print() const;
+    void setValues(std::vector<float> &newVals);
 };
 
 #endif //TICTACTOE_LINALG_H
