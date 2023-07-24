@@ -1,11 +1,12 @@
 #include "Layer.h"
 
-Layer::Layer(int nodeCount): nodeCount{nodeCount}, values{Vector(nodeCount)} {}
+InputLayer::InputLayer(int nodeCount): nodeCount{nodeCount}, values{Vector(nodeCount)} {}
 
-int Layer::getNodeCount() const {return nodeCount;}
+int InputLayer::getNodeCount() const {return nodeCount;}
 
-SubsequentLayer::SubsequentLayer(int nodeCount, Layer prevLayer): Layer{nodeCount},
-                                weights{Matrix(nodeCount, prevLayer.getNodeCount())},
+SubsequentLayer::SubsequentLayer(int nodeCount, const InputLayer& prevLayer): InputLayer{nodeCount},
+                                prevNodeCount{prevLayer.getNodeCount()},
+                                weights{Matrix(nodeCount, prevNodeCount)},
                                 biases{Vector(nodeCount)} {
     //TODO: since file not specified, random weights/biasess
 }

@@ -5,26 +5,22 @@
 
 //TODO: Should be able to read weights/biases from file, or generate random values
 
-class Layer {
+class InputLayer {
 protected:
     int nodeCount;
     Vector values;
 public:
-    Layer(int nodeCount);
-    virtual ~Layer() = 0;
+    explicit InputLayer(int nodeCount);
     int getNodeCount() const;
 };
 
-class InputLayer : public Layer {
-};
-
 //TODO: BETTER NAME
-class SubsequentLayer : public Layer {
+class SubsequentLayer : public InputLayer {
     int prevNodeCount;
     Matrix weights;
     Vector biases;
 public:
-    SubsequentLayer(int nodeCount, Layer prevLayer);
+    SubsequentLayer(int nodeCount, const InputLayer& prevLayer);
 };
 
 
