@@ -19,12 +19,11 @@ public:
 };
 
 class SubsequentLayer : public InputLayer {
-    InputLayer* prevLayer;
     Matrix weights;
     Vector biases;
 public:
-    explicit SubsequentLayer(int nodeCount, InputLayer* prev);
-    void setValues();
+    explicit SubsequentLayer(int nodeCount, int prevNodeCount);
+    void setValues(const InputLayer& prevLayer);
     Vector& getVector();
 };
 

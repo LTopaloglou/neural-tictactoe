@@ -1,11 +1,11 @@
 #include "LinAlg.h"
 
 #include <utility>
+#include <math.h>
 
 using namespace std;
 
 vector<float> randVec(int elements) {
-    //TODO: Should random values be between 0,1 or -1,1?
     vector<float> vec;
     for (int i = 0; i < elements; ++i) vec.emplace_back(2 * (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) - 1);
     return vec;
@@ -43,10 +43,19 @@ Vector Matrix::operator*(const Vector &vec) const {
 Vector::Vector(int size): size{size}, values{randVec(size)} {}
 
 ////Kind of a move constructor - vector used to initialize becomes smut
-Vector::Vector(std::vector<float> &init): size(init.size()), values{move(init)} {}
+Vector::Vector(std::vector<float> &init): size(init.size()), values{move(init)} {
+}
 
 //Copy Ctor
 Vector::Vector(const Vector &other): size{other.size}, values{other.values} {}
+
+//Copy assignment
+Vector& Vector::operator=(const Vector &other) {
+    Vector temp(other);
+    swap(size, temp.size);
+    swap(values, temp.values);
+    return *this;
+}
 
 //Move assignment
 Vector& Vector::operator=(Vector &&other)  noexcept {
@@ -73,6 +82,6 @@ Vector Vector::operator+(const Vector &other) const {
     return Vector(resultant);
 }
 
-void Vector::recLinActivation() {
-    for (float &el : values) el = (el < 0) ? 0 : el;
+void Vector::applyTanh() {
+    for (float &el : values) el = tanh(el);
 }
