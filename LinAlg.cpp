@@ -76,6 +76,17 @@ Matrix Matrix::operator+(const Matrix& other) const {
     return Matrix(resultant);
 }
 
+Matrix Matrix::operator-(const Matrix& other) const {
+    if (numCols != other.numCols || numRows != other.numRows) throw length_error("Cannot subtract matrices of different dimensions");
+    vector<vector<float>> resultant;
+    for (int m = 0; m < numRows; ++m) {
+        vector<float> temp;
+        for (int n = 0; n < numCols; ++n) temp.emplace_back(values.at(m).at(n) - other.values.at(m).at(n));
+        resultant.emplace_back(temp);
+    }
+    return Matrix(resultant);
+}
+
 Matrix Matrix::transpose() {
     vector<vector<float>> resultant;
     for (int n = 0; n < numCols; ++n) {
@@ -132,14 +143,14 @@ Vector Vector::operator+(const Vector &other) const {
 }
 
 Vector Vector::operator-(const Vector &other) const {
-    if (size != other.size) throw length_error("Cannot add two vectors of different lengths");
+    if (size != other.size) throw length_error("Cannot subtract two vectors of different lengths");
     vector<float> resultant;
     for (int i = 0; i < size; ++i) resultant.push_back(values.at(i) - other.values.at(i));
     return Vector(resultant);
 }
 
 Vector Vector::operator*(const Vector &other) const {
-    if (size != other.size) throw length_error("Cannot add two vectors of different lengths");
+    if (size != other.size) throw length_error("Cannot multiply two vectors of different lengths");
     vector<float> resultant;
     for (int i = 0; i < size; ++i) resultant.push_back(values.at(i) * other.values.at(i));
     return Vector(resultant);
@@ -163,8 +174,6 @@ Vector Vector::Tanh() {
 
 Matrix Vector::outerProduct(const Vector &other) const {
     vector<vector<float>> resultant;
-    //Resultant should be m rows where m is size of this vector
-    //And should be n rows where n is size of other vector
     for (int row = 0; row < size; ++row) {
         vector<float> temp;
         for (int col = 0; col < other.size; ++col) temp.emplace_back(values.at(row) * other.values.at(col));
