@@ -12,7 +12,7 @@ public:
     explicit NeuralNet(int inputs);
     void addLayer(int nodes);
     Vector& fwdProp(std::vector<float> &inputValues);
-    void backProp();
+    void backProp(float learningRate);
 };
 
 

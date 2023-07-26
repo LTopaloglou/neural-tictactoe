@@ -3,28 +3,29 @@
 
 #include "LinAlg.h"
 
-//TODO: Should be able to read weights/biases from file, or generate random values
+//TODO: Should be able to read weights/biases from file, or generate random activations
 
 class SubsequentLayer;
 
 class InputLayer {
 protected:
     int nodeCount;
-    Vector values;
+    Vector activations;
 public:
     friend SubsequentLayer;
     explicit InputLayer(int nodeCount);
-    void setValues(std::vector<float> &newVals);
+    void setActivations(std::vector<float> &newVals);
     int getNodeCount() const;
 };
 
 class SubsequentLayer : public InputLayer {
     Matrix weights;
     Vector biases;
+    Vector states;
 public:
     explicit SubsequentLayer(int nodeCount, int prevNodeCount);
-    void setValues(const InputLayer& prevLayer);
-    Vector& getVector();
+    void calculateActivations(const InputLayer& prevLayer);
+    Vector& getActivations();
 };
 
 

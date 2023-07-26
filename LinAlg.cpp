@@ -40,6 +40,21 @@ Vector Matrix::operator*(const Vector &vec) const {
     return Vector(resultant);
 }
 
+Matrix Matrix::operator*(const Matrix &other) const {
+    if (numCols != other.numRows) throw length_error("Cannot multiply matrices of these dimensions.");
+    vector<vector<float>> resultant;
+    for (int m = 0; m < numRows; ++m) {
+        vector<float> singleRow;
+        for (int n = 0; n < other.numCols; ++n) {
+            float entry = 0;
+            for (int i = 0; i < numCols; ++i) entry += values.at(m).at(i) * other.values.at(i).at(n);
+            singleRow.emplace_back(entry);
+        }
+        resultant.emplace_back(singleRow);
+    }
+    return Matrix(resultant);
+}
+
 Vector::Vector(int size): size{size}, values{randVec(size)} {}
 
 ////Kind of a move constructor - vector used to initialize becomes smut
@@ -82,6 +97,22 @@ Vector Vector::operator+(const Vector &other) const {
     return Vector(resultant);
 }
 
-void Vector::applyTanh() {
-    for (float &el : values) el = tanh(el);
+Vector Vector::operator-(const Vector &other) const {
+    if (size != other.size) throw length_error("Cannot add two vectors of different lengths");
+    vector<float> resultant;
+    for (int i = 0; i < size; ++i) resultant.push_back(values.at(i) - other.values.at(i));
+    return Vector(resultant);
+}
+
+Vector Vector::operator*(const Vector &other) const {
+    if (size != other.size) throw length_error("Cannot add two vectors of different lengths");
+    vector<float> resultant;
+    for (int i = 0; i < size; ++i) resultant.push_back(values.at(i) * other.values.at(i));
+    return Vector(resultant);
+}
+
+Vector Vector::Tanh() {
+    vector<float> resultant;
+    for (float el : values) resultant.push_back(tanh(el));
+    return Vector(resultant);
 }

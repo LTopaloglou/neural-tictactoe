@@ -14,6 +14,7 @@ public:
     explicit Matrix(std::vector<std::vector<float>> &init);
     void print() const;
     Vector operator*(const Vector& vec) const;
+    Matrix operator*(const Matrix& other) const;
 };
 
 class Vector{
@@ -29,7 +30,10 @@ public:
     void print() const;
     void setValues(std::vector<float> &newVals);
     Vector operator+(const Vector& other) const;
-    void applyTanh();
+    Vector operator-(const Vector& other) const;
+    Vector operator*(const Vector& other) const;
+    Vector Tanh();
+    //TODO: need some way to transpose a vector so can matrix x vec multiply
 };
 
 #endif //TICTACTOE_LINALG_H

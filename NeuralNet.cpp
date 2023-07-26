@@ -12,10 +12,10 @@ void NeuralNet::addLayer(int nodes) {
 
 Vector& NeuralNet::fwdProp(std::vector<float> &inputValues) {
     if (layerCount < 2) throw logic_error("No output layer to return.");
-    input.setValues(inputValues);
-    layers.at(0).setValues(input);
+    input.setActivations(inputValues);
+    layers.at(0).calculateActivations(input);
     for (int i = 1; i < layers.size(); ++i) {
-        layers.at(i).setValues(layers.at(i-1));
+        layers.at(i).calculateActivations(layers.at(i - 1));
     }
-    return layers.back().getVector();
+    return layers.back().getActivations();
 }

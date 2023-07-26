@@ -27,11 +27,24 @@ void playMinMax() {
 
 int main() {
     srand((unsigned int)time(NULL));
-    vector<float> input = {0.0, 1.0};
-    NeuralNet net(2);
-    net.addLayer(2);
-    net.addLayer(3);
-    net.addLayer(5);
-    net.addLayer(2);
-    net.fwdProp(input).print();
+//    vector<float> input = {0.0, 1.0};
+//    NeuralNet net(2);
+//    net.addLayer(2);
+//    net.addLayer(3);
+//    net.addLayer(5);
+//    net.addLayer(2);
+//    net.fwdProp(input).print();
+    vector<vector<float>> temp1;
+    temp1.emplace_back(vector<float>{1, 2, 3});
+    temp1.emplace_back(vector<float>{4, 5, 6});
+    vector<vector<float>> temp2;
+    temp2.emplace_back(vector<float>{7});
+    temp2.emplace_back(vector<float>{8});
+    temp2.emplace_back(vector<float>{9});
+    Matrix mat1(temp1);
+    Matrix mat2(temp2);
+    Matrix mat3 = mat1*mat2;
+    mat1.print();
+    mat2.print();
+    mat3.print();
 }
