@@ -26,6 +26,7 @@ public:
     explicit SubsequentLayer(int nodeCount, int prevNodeCount);
     void calculateActivations(const InputLayer& prevLayer);
     Vector& getActivations();
+    Vector adjustParams(Vector dC_da);
 };
 
 

@@ -32,8 +32,11 @@ public:
     Vector operator+(const Vector& other) const;
     Vector operator-(const Vector& other) const;
     Vector operator*(const Vector& other) const;
+    Vector operator*(float scalar) const;
     Vector Tanh();
     //TODO: need some way to transpose a vector so can matrix x vec multiply
 };
+
+Vector operator*(float scalar, const Vector& other);
 
 #endif //TICTACTOE_LINALG_H

@@ -23,3 +23,9 @@ void SubsequentLayer::calculateActivations(const InputLayer& prevLayer) {
 Vector& SubsequentLayer::getActivations() {
     return activations;
 }
+
+Vector SubsequentLayer::adjustParams(Vector dC_da) {
+    //1. calculate dC_da for the next layer
+    //2. calculate, apply dC_db and dC_dw for this layer
+    //3. return dC_da for the next layer
+}

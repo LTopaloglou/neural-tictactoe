@@ -111,6 +111,16 @@ Vector Vector::operator*(const Vector &other) const {
     return Vector(resultant);
 }
 
+Vector Vector::operator*(float scalar) const {
+    vector<float> resultant;
+    for (int i = 0; i < size; ++i) resultant.push_back(values.at(i) * scalar);
+    return Vector(resultant);
+}
+
+Vector operator*(float scalar, const Vector& other) {
+    return other * scalar;
+}
+
 Vector Vector::Tanh() {
     vector<float> resultant;
     for (float el : values) resultant.push_back(tanh(el));
