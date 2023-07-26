@@ -61,7 +61,9 @@ int main() {
     vec2.print();
     Matrix mat5 = vec1.outerProduct(vec2);
     mat5.print();
-    Matrix mat6 = vec2.outerProduct(vec1);
+    Matrix mat6 = mat5 * 0.5;
     mat6.print();
+    Matrix mat7 = mat5 + mat6;
+    mat7.print();
 
 }

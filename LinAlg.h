@@ -15,6 +15,8 @@ public:
     void print() const;
     Vector operator*(const Vector& vec) const;
     Matrix operator*(const Matrix& other) const;
+    Matrix operator*(float scalar) const;
+    Matrix operator+(const Matrix& other) const;
     Matrix transpose();
 };
 

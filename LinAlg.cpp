@@ -55,6 +55,27 @@ Matrix Matrix::operator*(const Matrix &other) const {
     return Matrix(resultant);
 }
 
+Matrix Matrix::operator*(float scalar) const {
+    vector<vector<float>> resultant;
+    for (int m = 0; m < numRows; ++m) {
+        vector<float> temp;
+        for (int n = 0; n < numCols; ++n) temp.emplace_back(scalar * values.at(m).at(n));
+        resultant.emplace_back(temp);
+    }
+    return Matrix(resultant);
+}
+
+Matrix Matrix::operator+(const Matrix& other) const {
+    if (numCols != other.numCols || numRows != other.numRows) throw length_error("Cannot add matrices of different dimensions");
+    vector<vector<float>> resultant;
+    for (int m = 0; m < numRows; ++m) {
+        vector<float> temp;
+        for (int n = 0; n < numCols; ++n) temp.emplace_back(values.at(m).at(n) + other.values.at(m).at(n));
+        resultant.emplace_back(temp);
+    }
+    return Matrix(resultant);
+}
+
 Matrix Matrix::transpose() {
     vector<vector<float>> resultant;
     for (int n = 0; n < numCols; ++n) {
@@ -151,3 +172,4 @@ Matrix Vector::outerProduct(const Vector &other) const {
     }
     return Matrix(resultant);
 }
+

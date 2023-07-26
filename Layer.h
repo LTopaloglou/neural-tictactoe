@@ -15,6 +15,7 @@ public:
     friend SubsequentLayer;
     explicit InputLayer(int nodeCount);
     void setActivations(std::vector<float> &newVals);
+    Vector& getActivations();
     int getNodeCount() const;
 };
 
@@ -25,8 +26,7 @@ class SubsequentLayer : public InputLayer {
 public:
     explicit SubsequentLayer(int nodeCount, int prevNodeCount);
     void calculateActivations(const InputLayer& prevLayer);
-    Vector& getActivations();
-    Vector adjustParams(Vector dC_da);
+    Vector adjustParams(Vector dC_da, Vector nextActivations, float learnRate);
 };
 
 

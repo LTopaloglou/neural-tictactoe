@@ -21,9 +21,9 @@ Vector& NeuralNet::fwdProp(std::vector<float> &inputValues) {
 }
 
 void NeuralNet::backProp(float learningRate, std::vector<float> wantedOutput) {
-    //TODO: NAME VECS BETTER
     Vector dC_da = 2 * (layers.back().getActivations() - Vector(wantedOutput));
-    for (auto it = layers.rbegin(); it != layers.rend(); ++it) { //TODO: DOES THIS REERSE ITERATOR WORK?
-        dC_da = it->adjustParams(dC_da);
+    for (int i = layers.size() - 1; i > 0; --i) {
+        dC_da = layers.at(i).adjustParams(dC_da, layers.at(i-1).getActivations(), learningRate);
     }
+    layers.at(0).adjustParams(dC_da, input.getActivations(), learningRate);
 }
