@@ -34,6 +34,7 @@ int main() {
 //    net.addLayer(5);
 //    net.addLayer(2);
 //    net.fwdProp(input).print();
+
     vector<vector<float>> temp1;
     temp1.emplace_back(vector<float>{1, 2, 3});
     temp1.emplace_back(vector<float>{4, 5, 6});
@@ -47,4 +48,20 @@ int main() {
     mat1.print();
     mat2.print();
     mat3.print();
+    Vector floats(1.5, 10);
+    floats.print();
+    Matrix mat4 = mat1.transpose();
+    mat1.print();
+    mat4.print();
+    vector<float> temp3{1, 2, 3};
+    vector<float> temp4{4, 5, 6};
+    Vector vec1(temp3);
+    Vector vec2(temp4);
+    vec1.print();
+    vec2.print();
+    Matrix mat5 = vec1.outerProduct(vec2);
+    mat5.print();
+    Matrix mat6 = vec2.outerProduct(vec1);
+    mat6.print();
+
 }

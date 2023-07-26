@@ -55,11 +55,24 @@ Matrix Matrix::operator*(const Matrix &other) const {
     return Matrix(resultant);
 }
 
+Matrix Matrix::transpose() {
+    vector<vector<float>> resultant;
+    for (int n = 0; n < numCols; ++n) {
+        vector<float> temp;
+        for (int m = 0; m < numRows; ++m) {
+            temp.push_back(values.at(m).at(n));
+        }
+        resultant.push_back(temp);
+    }
+    return Matrix(resultant);
+}
+
 Vector::Vector(int size): size{size}, values{randVec(size)} {}
 
+Vector::Vector(float value, int size): size{size}, values{vector<float>(size, value)} {}
+
 ////Kind of a move constructor - vector used to initialize becomes smut
-Vector::Vector(std::vector<float> &init): size(init.size()), values{move(init)} {
-}
+Vector::Vector(std::vector<float> &init): size(init.size()), values{move(init)} {}
 
 //Copy Ctor
 Vector::Vector(const Vector &other): size{other.size}, values{other.values} {}
@@ -125,4 +138,16 @@ Vector Vector::Tanh() {
     vector<float> resultant;
     for (float el : values) resultant.push_back(tanh(el));
     return Vector(resultant);
+}
+
+Matrix Vector::outerProduct(const Vector &other) const {
+    vector<vector<float>> resultant;
+    //Resultant should be m rows where m is size of this vector
+    //And should be n rows where n is size of other vector
+    for (int row = 0; row < size; ++row) {
+        vector<float> temp;
+        for (int col = 0; col < other.size; ++col) temp.emplace_back(values.at(row) * other.values.at(col));
+        resultant.emplace_back(temp);
+    }
+    return Matrix(resultant);
 }

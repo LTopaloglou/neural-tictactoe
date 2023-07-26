@@ -15,6 +15,7 @@ public:
     void print() const;
     Vector operator*(const Vector& vec) const;
     Matrix operator*(const Matrix& other) const;
+    Matrix transpose();
 };
 
 class Vector{
@@ -23,6 +24,7 @@ class Vector{
 public:
     friend Matrix;
     explicit Vector(int size);
+    explicit Vector(float value, int size);
     explicit Vector(std::vector<float> &init);
     Vector(const Vector& other);
     Vector& operator=(const Vector& other);
@@ -34,6 +36,7 @@ public:
     Vector operator*(const Vector& other) const;
     Vector operator*(float scalar) const;
     Vector Tanh();
+    Matrix outerProduct(const Vector& other) const;
     //TODO: need some way to transpose a vector so can matrix x vec multiply
 };
 

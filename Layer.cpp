@@ -25,7 +25,9 @@ Vector& SubsequentLayer::getActivations() {
 }
 
 Vector SubsequentLayer::adjustParams(Vector dC_da) {
+    Vector da_dz = Vector(1.0, nodeCount) - (states.Tanh())*(states.Tanh());
     //1. calculate dC_da for the next layer
+    //Vector dC_da_next = (dC_da * da_dz).;
     //2. calculate, apply dC_db and dC_dw for this layer
     //3. return dC_da for the next layer
 }
