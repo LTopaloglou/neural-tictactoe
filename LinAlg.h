@@ -34,6 +34,7 @@ public:
     Vector& operator=(Vector&& other) noexcept;
     void print() const;
     void setValues(std::vector<float> &newVals);
+    std::vector<float> getValues();
     Vector operator+(const Vector& other) const;
     Vector operator-(const Vector& other) const;
     Vector operator*(const Vector& other) const;

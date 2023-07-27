@@ -135,6 +135,8 @@ void Vector::setValues(std::vector<float> &newVals) {
     swap(values, newVals);
 }
 
+std::vector<float> Vector::getValues() {return values;}
+
 Vector Vector::operator+(const Vector &other) const {
     if (size != other.size) throw length_error("Cannot add two vectors of different lengths");
     vector<float> resultant;

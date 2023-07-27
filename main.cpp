@@ -65,16 +65,64 @@ void generateTrainingData(int numGames, vector<vector<float>> &boardStates, vect
     }
 }
 
+void playNeuralNet(NeuralNet& net) {
+    Board board;
+    while (board.evaluate() == winner::incomplete) {
+        board.print(cout);
+        int move;
+        do {
+            cout << "Choose a tile from 0-8: " << endl;
+            cout << ">";
+            cin >> move;
+        } while (!board.playMove(move, Board::PLAYER_TILE));
+        board.print(cout);
+        if(board.evaluate() == winner::incomplete) {
+            cout << "AI Move: " << endl;
+            vector<float> state = board.getBoardState();
+            vector<float> ratings = net.fwdProp(state).getValues();
+            for (int i = 0; i < ratings.size(); ++i) cout << " Move: " << i << " Rating: " << ratings.at(i) << endl;
+            //Choose the move with the highest rating
+            //Try to play it. if fails, play next highest rated
+            float lessThan = 100;
+            float highestRating = -100;
+            for (int i = 0; i < ratings.size(); ++i) if (ratings.at(i) > highestRating && ratings.at(i) < lessThan) {
+                move = i;
+                highestRating = ratings.at(i);
+            }
+            while (!board.playMove(move, Board::AI_TILE)) {
+                lessThan = ratings.at(move);
+                highestRating = -100;
+                for (int i = 0; i < ratings.size(); ++i) if (ratings.at(i) > highestRating && ratings.at(i) < lessThan) {
+                    move = i;
+                    highestRating = ratings.at(i);
+                }
+            }
+        }
+    }
+    if (board.evaluate() == winner::player) cout << "Congratulations, you beat the neural network!" << endl;
+    else if (board.evaluate() == winner::ai) {
+        board.print(cout);
+        cout << "The neural net has beaten you!" << endl;
+    } else cout << "Tie game!" << endl;
+}
+
 int main() {
     srand((unsigned int)time(NULL));
 
     vector<vector<float>> boardStates;
     vector<vector<float>> moveWeights;
-    generateTrainingData(10, boardStates, moveWeights);
-
+    cout << "How many games of tictactoe would you like to train the neural net on?" << endl;
+    cout << ">";
+    int numGames;
+    cin >> numGames;
+    cout << "Generating training data..." << endl;
+    generateTrainingData(numGames, boardStates, moveWeights);
     NeuralNet net(9);
     net.addLayer(9);
     net.addLayer(9);
+    cout << "Training neural net..." << endl;
+    cout << "Size of dataset: " << boardStates.size() << endl;
     net.train(0.1, boardStates, moveWeights);
 
+    playNeuralNet(net);
 }
