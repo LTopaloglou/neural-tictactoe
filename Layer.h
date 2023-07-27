@@ -15,7 +15,7 @@ public:
     friend SubsequentLayer;
     explicit InputLayer(int nodeCount);
     void setActivations(std::vector<float> &newVals);
-    Vector& getActivations();
+    Vector getActivations();
     int getNodeCount() const;
 };
 

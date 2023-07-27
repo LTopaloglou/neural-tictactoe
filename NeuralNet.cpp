@@ -10,7 +10,7 @@ void NeuralNet::addLayer(int nodes) {
     ++layerCount;
 }
 
-Vector& NeuralNet::fwdProp(std::vector<float> &inputValues) {
+Vector NeuralNet::fwdProp(std::vector<float> &inputValues) {
     if (layerCount < 2) throw logic_error("No output layer to return.");
     input.setActivations(inputValues);
     layers.at(0).calculateActivations(input);
@@ -26,4 +26,12 @@ void NeuralNet::backProp(float learningRate, std::vector<float> wantedOutput) {
         dC_da = layers.at(i).adjustParams(dC_da, layers.at(i-1).getActivations(), learningRate);
     }
     layers.at(0).adjustParams(dC_da, input.getActivations(), learningRate);
+}
+
+void NeuralNet::train(float learningRate, vector<vector<float>> givenInputs,
+                      vector<vector<float>> wantedOutputs) {
+    for (int i = 0; i < givenInputs.size(); ++i) {
+        this->fwdProp(givenInputs.at(i));
+        this->backProp(learningRate, wantedOutputs.at(i));
+    }
 }

@@ -6,7 +6,7 @@ InputLayer::InputLayer(int nodeCount): nodeCount{nodeCount}, activations{Vector(
 
 int InputLayer::getNodeCount() const {return nodeCount;}
 
-Vector& InputLayer::getActivations() {return activations;}
+Vector InputLayer::getActivations() {return activations;}
 
 void InputLayer::setActivations(std::vector<float> &newVals) {activations.setValues(newVals);}
 

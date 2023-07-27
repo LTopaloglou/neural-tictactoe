@@ -89,3 +89,13 @@ Board Board::aiMove(int spot) {
     if (!copy.playMove(spot, AI_TILE)) throw "Invalid Move";
     return copy;
 }
+
+vector<float> Board::getBoardState() {
+    vector<float> state;
+    for (auto tile : tiles) {
+        if (tile == EMPTY_TILE) state.emplace_back(0);
+        else if (tile == PLAYER_TILE) state.emplace_back(-1);
+        else if (tile == AI_TILE) state.emplace_back(1);
+    }
+    return state;
+}

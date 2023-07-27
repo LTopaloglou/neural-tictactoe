@@ -8,11 +8,12 @@ class NeuralNet {
     int inputCount;
     InputLayer input;
     std::vector<SubsequentLayer> layers;
+    void backProp(float learningRate, std::vector<float> wantedOutput);
 public:
     explicit NeuralNet(int inputs);
     void addLayer(int nodes);
-    Vector& fwdProp(std::vector<float> &inputValues);
-    void backProp(float learningRate, std::vector<float> wantedOutput); //TODO: This should be private and only used by train() method?
+    Vector fwdProp(std::vector<float> &inputValues);
+    void train(float learningRate, std::vector<std::vector<float>> givenInputs, std::vector<std::vector<float>> wantedOutputs);
 };
 
 
