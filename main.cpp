@@ -65,6 +65,25 @@ void generateTrainingData(int numGames, vector<vector<float>> &boardStates, vect
     }
 }
 
+void generateFirstTurnTrainingData(int numGames, vector<vector<float>> &boardStates, vector<vector<float>> &moveWeights) {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    default_random_engine rng{seed};
+    for (int i = 0; i < numGames; ++i) {
+        Board board;
+        vector<int> moves = board.possibleMoves();
+        shuffle(moves.begin(), moves.end(), rng);
+
+        //PLAYER MOVE
+        int nextMove = moves.back();
+        moves.pop_back();
+        board.playMove(nextMove, Board::PLAYER_TILE);
+
+        //SAVE BOARD STATE, MIN_MAX VECTOR HERE
+        boardStates.emplace_back(board.getBoardState());
+        moveWeights.emplace_back(getMinMaxScores(board));
+    }
+}
+
 void playNeuralNet(NeuralNet& net) {
     Board board;
     while (board.evaluate() == winner::incomplete) {
@@ -111,12 +130,17 @@ int main() {
 
     vector<vector<float>> boardStates;
     vector<vector<float>> moveWeights;
-    cout << "How many games of tictactoe would you like to train the neural net on?" << endl;
+    cout << "How many whole games of tictactoe would you like to train the neural net on?" << endl;
     cout << ">";
     int numGames;
     cin >> numGames;
     cout << "Generating training data..." << endl;
     generateTrainingData(numGames, boardStates, moveWeights);
+    cout << "How extra first turns would you like to train the neural net on?" << endl;
+    cout << ">";
+    cin >> numGames;
+    cout << "Generating training data..." << endl;
+    generateFirstTurnTrainingData(numGames, boardStates, moveWeights);
     NeuralNet net(9);
     net.addLayer(9);
     net.addLayer(9);
@@ -124,5 +148,11 @@ int main() {
     cout << "Size of dataset: " << boardStates.size() << endl;
     net.train(0.1, boardStates, moveWeights);
 
-    playNeuralNet(net);
+    char play;
+    do {
+        playNeuralNet(net);
+        cout << "Would you like to play again? y/n" << endl;
+        cout << ">";
+        cin >> play;
+    } while (play == 'y');
 }
