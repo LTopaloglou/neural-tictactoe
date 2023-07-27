@@ -144,6 +144,7 @@ int main() {
     NeuralNet net(9);
     net.addLayer(9);
     net.addLayer(9);
+    net.addLayer(9);
     cout << "Training neural net..." << endl;
     cout << "Size of dataset: " << boardStates.size() << endl;
     net.train(0.1, boardStates, moveWeights);

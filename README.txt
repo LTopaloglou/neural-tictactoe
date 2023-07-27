@@ -3,7 +3,7 @@ This is a tic-tac-toe game where you play against a neural network.
 The neural network is trained on data created by randomly playing
 moves, and a min/max algorithm is used to determine the ideal outputs
 of our network and calculate cost thereafter.
-The neural network is currently set to have one hidden layer with 9 nodes,
+The neural network is currently set to have two hidden layers with 9 nodes each,
 but the NeuralNet class allows you to easily add more hidden layers with
 however many nodes you like.
 
@@ -23,3 +23,7 @@ _______
 |_|_|_|
 
 At the end of the game, indicate if you would like to play again.
+
+TIP:
+I find that 100 full games & 200 first turns is enough to make the
+AI play decently well but still beatable
