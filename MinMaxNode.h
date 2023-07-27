@@ -27,5 +27,4 @@ public:
     Board getBestMove() const;
 };
 
-
 #endif //TICTACTOE_MINMAXNODE_H

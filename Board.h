@@ -11,8 +11,6 @@ enum winner{incomplete, tie, player, ai};
 class Board {
     static inline int NUM_TILES = 9;
     static inline char EMPTY_TILE = ' ';
-    static inline char PLAYER_TILE = 'X';
-    static inline char AI_TILE = 'O';
 
     vector<char> tiles;
 
@@ -22,6 +20,8 @@ class Board {
     bool checkTie();
 
 public:
+    static inline char PLAYER_TILE = 'X';
+    static inline char AI_TILE = 'O';
     Board();
     Board(const Board& other);
     Board(Board&& other) noexcept;
@@ -32,6 +32,7 @@ public:
     void print(ostream &out);
     Board playerMove(int spot);
     Board aiMove(int spot);
+    std::vector<float> getBoardState();
 };
 
 
